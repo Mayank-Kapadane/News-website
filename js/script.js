@@ -16,7 +16,6 @@ async function fetchRandomNews() {
         const req_object = new Request(apiUrl);
         const response = await fetch(req_object);
         const data = response.json();
-        console.log("data =", data);
 
         // we want to show the data in our card
         //  for show something we need to return something

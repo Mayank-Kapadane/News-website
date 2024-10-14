@@ -1,0 +1,7 @@
+# Ignore Bootstrap folder
+bootstrap/
+
+# Ignore specific files
+learn.md
+data.js
+js/config.js
