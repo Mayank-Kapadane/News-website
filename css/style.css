@@ -45,6 +45,10 @@ nav{
     font-size : 18px ;
     color : #333;
 }
+#search-input:focus{
+
+    outline: forestgreen solid 5px;
+}
 
 #search-button{
     padding : 10px 20px;
