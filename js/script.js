@@ -6,16 +6,23 @@ const blogContainer = document.getElementById("blog-container");
 
 async function fetchRandomNews() {
     try {
+        /*
+         console.log("Fetching the data ....")
+         ************************************
+        */
+
         // For fetching the data visit the homepage of website and there are some examples. of data in json format.
         // The home page shows the URL by which we can fetch the data.
         // You can see the docs of the website to see the query string parameter
-        const apiUrl =
-            "https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apikey=" +
-            API_KEY;
-
-        const req_object = new Request(apiUrl);
-        const response = await fetch(req_object);
-        const data = response.json();
+        const apiUrl = "https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apikey=" + API_KEY;
+        
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        /*
+        console.log("Data =",data);
+        **************************
+        */
+       
 
         // we want to show the data in our card
         //  for show something we need to return something
@@ -26,13 +33,68 @@ async function fetchRandomNews() {
     }
 }
 
-function displayBlogs() {}
+function displayBlogs(articles) {
+    // This function will generate cards
+    // also we need to one more thing if the website is showing some previously fetched data then first of all we want to remove that and after removing we'll simply replace it with newest one.
+    blogContainer.innerHTML = "";
+    articles.forEach((article) => {
+
+        // We're going to create a same thing like this dyanmically using javascript
+        /*
+        <div class="blog-card">
+            <img src="https://placehold.co/600x400" alt="600 x 400 image">
+            <h2> This is a title</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, earum. Tempora, explicabo quidem cum sint ipsa harum fugit, dicta amet incidunt, quam quia. Lorem ipsum, dolor sit amet consectetur adipisicing elit. </p>
+        </div>
+        */
+        
+        // create a div-tag
+        const blogCard = document.createElement("div");
+        blogCard.classList.add("blog-card");
+        
+        // store the image somewhere
+        const img = document.createElement("img");
+        
+        // img-tag also have two attributes
+        img.src = article.urlToImage;
+        img.alt = article.title;
+
+        // create h2
+        const title = document.createElement("h2");
+        title.textContent = article.title;
+
+        // create discription (p-tag)
+        const discription = document.createElement("p");
+        discription.textContent = article.description;
+
+
+        /* We have successfully created our components 
+        Now, after creating our components we need to append those componets inside our main#blog-container
+        for doing that ..,
+        */
+       blogCard.appendChild(img);
+       blogCard.appendChild(title);
+       blogCard.appendChild(discription);
+
+       blogContainer.appendChild(blogCard);
+
+
+
+    })
+}
 
 (async () => {
+    /* 
     console.log("hi");
+    ********************
+     */
     try {
         const articles = await fetchRandomNews();
-        console.log(articles);
+        /*
+         console.log("Articles =",articles);
+        ********************
+        */
+       displayBlogs(articles);
     } catch (error) {
         console.error("Error fetching while random news");
     }
