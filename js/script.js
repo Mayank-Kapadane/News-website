@@ -16,6 +16,9 @@ async function fetchRandomNews() {
         // You can see the docs of the website to see the query string parameter
         const apiUrl = "https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apikey=" + API_KEY;
         
+        // Beacuse of the parameter pageSize=10 we're showing 10 blocks. 
+        // That type parameter you can search on news api website.
+
         const response = await fetch(apiUrl);
         const data = await response.json();
         /*
@@ -63,10 +66,24 @@ function displayBlogs(articles) {
         const title = document.createElement("h2");
         title.textContent = article.title;
 
-        // create discription (p-tag)
-        const discription = document.createElement("p");
-        discription.textContent = article.description;
+            // some titles are too large so add ... after some np. of word in title.
+            const truncatedTitle = article.title.length > 30 ? article.title.slice(0,30) + "..." : article.title; 
+            title.textContent = truncatedTitle;
 
+        // create discription (p-tag)
+        const description = document.createElement("p");
+        description.textContent = article.description;
+        
+        // same way with discription.
+            if(!article.description){
+                description.textContent = "Click here to see Description";
+            
+            }
+            else{
+
+                const truncatedDescription = article.description.length > 120 ? article.description.slice(0,120) + "..." : article.description;
+                description.textContent = truncatedDescription;
+            }
 
         /* We have successfully created our components 
         Now, after creating our components we need to append those componets inside our main#blog-container
@@ -74,7 +91,7 @@ function displayBlogs(articles) {
         */
        blogCard.appendChild(img);
        blogCard.appendChild(title);
-       blogCard.appendChild(discription);
+       blogCard.appendChild(description);
 
        blogContainer.appendChild(blogCard);
 

@@ -71,12 +71,13 @@ nav{
 }
 
 .blog-card{
-    width : 280px;
+    width : 17.5rem;
     border : 1px solid #2d4c50;
     border-radius : 10px;
     cursor : pointer;
     padding : 1rem ;
     margin : 10px;
+    height : 34.8814rem;
 }
 
 .blog-card:hover{
